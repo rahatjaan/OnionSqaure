@@ -1,0 +1,68 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"	
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd                          
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+	
+	
+
+	<context:annotation-config />
+	
+	<!-- tell spring to use annotation based congfigurations -->
+	<context:component-scan base-package="com.onionsquare.web.controller" />
+	<context:component-scan base-package="com.onionsquare.web.service" />
+	<context:component-scan base-package="com.onionsquare.web.model" />
+	<context:component-scan base-package="com.onionsquare.web" />
+	<mvc:annotation-driven />
+	
+	<mvc:resources mapping="/static/**" location="/static/"/>
+	
+<!-- 	  <mvc:resources mapping="/uploads/**" location="file:/D:/imageupload/"/> -->
+	<mvc:resources mapping="/uploads/**" location="file:/home/onion123/onionuploads/"/>
+
+
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames" value="classpath:message" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- Defining which view resolver to use -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="exposeContextBeansAsAttributes" value="true" />
+		<property name="order" value="1" />
+	</bean>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean id="tilesviewResolver" class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
+		<property name="order" value="0" />
+	</bean>
+	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			 <list>
+				<value>classpath*:tiles-definitions.xml</value>
+			 </list>
+		</property>
+	 </bean>
+	 	 <!-- Either you can annotate this resource as @Component or you create at least one bean in context-file so that 
+	 it is available for autowiring. -->
+	 <bean id="shoppingCart" class="com.onionsquare.web.model.ShoppingCart" scope="session">
+  		<!-- This requires CGLIB -->  
+		<aop:scoped-proxy/>
+	</bean>
+ 
+</beans>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+		<security:filter-chain-map path-type="ant">
+			
+				          
+			<security:filter-chain pattern="/admin/**"
+				filters="securityContextFilter, adminLogoutFilter,adminAuthenticationProcessingFilter, 
+				          adminExceptionTranslationFilter,adminFilterSecurityInterceptor" />
+
+			<security:filter-chain pattern="/seller/**"
+				filters="securityContextFilter, userLogoutFilter,userAuthenticationProcessingFilter,   
+				          userExceptionTranslationFilter,userFilterSecurityInterceptor" />
+				          
+			<security:filter-chain pattern="/*/customer/**"
+				filters="securityContextFilter, customerLogoutFilter,customerAuthenticationProcessingFilter,   
+				          customerExceptionTranslationFilter,customerFilterSecurityInterceptor" />
+			
+			<security:filter-chain pattern="/customer/j_spring_security_logout" filters="securityContextFilter,customerLogoutFilter,customerExceptionTranslationFilter,customerFilterSecurityInterceptor," />
+			<security:filter-chain pattern="/customer/j_spring_security_check" filters="securityContextFilter,customerAuthenticationProcessingFilter,customerExceptionTranslationFilter,customerFilterSecurityInterceptor" />
+		    <security:filter-chain pattern="/customer/customer-process" filters="securityContextFilter,customerAuthenticationProcessingFilter,customerExceptionTranslationFilter,customerFilterSecurityInterceptor" />
+		    
+		    <security:filter-chain pattern="/**/*"
+				filters="securityContextFilter" />
+		   <security:filter-chain pattern="/"
+				filters="securityContextFilter" />
+
+		</security:filter-chain-map>
+	</bean>
+
+	<bean id="adminLogoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<constructor-arg value="/admin" />
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl" value="/admin/j_spring_security_logout" />
+	</bean>
+	
+	<!-- Admin Filter -->
+
+	<bean id="adminAuthenticationProcessingFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager" ref="adminAuthenticationManager" />
+		<property name="filterProcessesUrl" value="/admin/j_spring_security_check" />
+
+		<!-- <property name="usernameParameter" value="username "/> -->
+		<!-- <property name="passwordParameter" value="password"/> -->
+		<property name="authenticationSuccessHandler">
+			<bean
+				class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler ">
+				<property name="alwaysUseDefaultTargetUrl" value="true" />
+				<property name="defaultTargetUrl" value="/admin/home" />
+			</bean>
+		</property>
+		<property name="authenticationFailureHandler">
+			<bean
+				class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+				<property name="exceptionMappings">
+					<props>
+						<prop
+							key="org.springframework.security.authentication.BadCredentialsException">/admin/login/badCredentials</prop>
+						<prop
+							key="org.springframework.security.authentication.CredentialsExpiredException">/admin/login/credentialsExpired</prop>
+						<prop
+							key="org.springframework.security.authentication.LockedException">/admin/login/accountLocked</prop>
+						<prop
+							key="org.springframework.security.authentication.DisabledException">/admin/login/accountDisabled</prop>
+					</props>
+				</property>
+			</bean>
+		</property>
+
+	</bean>
+	
+	<bean id="adminExceptionTranslationFilter"
+		class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean
+				class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+				<property name="loginFormUrl" value="/admin-login" />
+				<property name="forceHttps" value="false" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="adminAccessDeniedHandler"
+		class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<property name="errorPage" value="/admin" />
+	</bean>
+
+
+	
+
+	<bean id="adminFilterSecurityInterceptor"
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="accessDecisionManager" ref="httpRequestAccessDecisionManager" />
+		<property name="authenticationManager" ref="adminAuthenticationManager" />
+		<property name="securityMetadataSource" ref="commonInterceptUrlDefinition" />
+	</bean>
+	
+	
+	<security:authentication-manager id="adminAuthenticationManager">
+		<security:authentication-provider
+			user-service-ref="adminCustomUserService">
+			  <security:password-encoder ref="passwordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	
+	<!-- Seller Filter-->
+
+	<bean id="userLogoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<constructor-arg value="/" />
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl" value="/seller/j_spring_security_logout" />
+	</bean>
+
+	<bean id="userAuthenticationProcessingFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager" ref="userAuthenticationManager" />
+		<property name="filterProcessesUrl" value="/seller/j_spring_security_check" />
+
+
+		<property name="authenticationSuccessHandler">
+			<bean
+				class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler ">
+				<property name="alwaysUseDefaultTargetUrl" value="true" />
+				<property name="defaultTargetUrl" value="/seller/seller-home" />
+			</bean>
+		</property>
+		<property name="authenticationFailureHandler">
+		   <bean id="authenticationFailureHandler"
+			class="com.onionsquare.web.service.CustomSimpleUrlAuthenticationFailureHandler">
+			<property name="defaultFailureUrl" value="/seller/login/badCredentials" />
+			 <property name="targetUrlParameter" value="failureUrl" />
+		  </bean>			
+		</property>
+	</bean>
+
+
+	<bean id="userExceptionTranslationFilter"
+			class="org.springframework.security.web.access.ExceptionTranslationFilter">
+			<property name="authenticationEntryPoint">
+				<bean
+					class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+					<property name="loginFormUrl" value="/" />
+					<property name="forceHttps" value="false" />
+				</bean>
+			</property>
+			<property name="accessDeniedHandler" ref="userAccessDeniedHandler" />
+		</bean>
+		<bean id="userAccessDeniedHandler"
+			class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+			<property name="errorPage" value="/" />
+		</bean>
+
+	<bean id="userFilterSecurityInterceptor"
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="accessDecisionManager" ref="httpRequestAccessDecisionManager" />
+		<property name="authenticationManager" ref="userAuthenticationManager" />
+		<property name="securityMetadataSource" ref="commonInterceptUrlDefinition" />
+	</bean>
+
+
+	<security:authentication-manager id="userAuthenticationManager" alias="userAuthenticationManager">
+		<security:authentication-provider
+			user-service-ref="userCustomUserService">
+			     <security:password-encoder ref="passwordEncoder"/>			
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<!-- customer filter  -->
+	
+	
+	<bean id="customerLogoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<constructor-arg>
+		<bean
+					class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler" >
+					<property name="useReferer" value="false" />
+					<property name="targetUrlParameter" value="successUrl" />
+		</bean>
+		</constructor-arg>
+		<constructor-arg>
+				<bean
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />				
+		</constructor-arg>
+	   	
+		<property name="filterProcessesUrl" value="/customer/j_spring_security_logout" />
+	</bean>
+
+	<bean id="customerAuthenticationProcessingFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager" ref="customerAuthenticationManager" />
+		<property name="filterProcessesUrl" value="/customer/j_spring_security_check" />
+
+
+		<property name="authenticationSuccessHandler">
+			<bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+				<property name="useReferer" value="false" />
+				<property name="targetUrlParameter" value="successUrl" />
+			</bean>
+		</property>
+		<property name="authenticationFailureHandler">
+		<bean id="authenticationFailureHandler"
+			class="com.onionsquare.web.service.CustomSimpleUrlAuthenticationFailureHandler">
+			<property name="defaultFailureUrl" value="/login?error=true" />
+			 <property name="targetUrlParameter" value="failureUrl" />
+		</bean>
+		</property>
+	</bean>
+
+	<bean id="customerExceptionTranslationFilter"
+			class="org.springframework.security.web.access.ExceptionTranslationFilter">
+			<property name="authenticationEntryPoint">
+				<bean
+					class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+					<property name="loginFormUrl" value="/customer-login" />
+					<property name="forceHttps" value="false" />
+				</bean>
+			</property>
+			<property name="accessDeniedHandler" ref="customerAccessDeniedHandler" />
+		</bean>
+		<bean id="customerAccessDeniedHandler"
+			class="com.onionsquare.web.service.CustomAccessDeniedHandlerImpl">
+			<property name="errorPage" value="/customer-login" />
+		</bean>
+
+	<bean id="customerFilterSecurityInterceptor"
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="accessDecisionManager" ref="httpRequestAccessDecisionManager" />
+		<property name="authenticationManager" ref="customerAuthenticationManager" />
+		<property name="securityMetadataSource" ref="commonInterceptUrlDefinition" />
+	</bean>
+
+
+	<security:authentication-manager id="customerAuthenticationManager" alias="customerAuthenticationManager">
+		<security:authentication-provider
+			user-service-ref="customerCustomUserService">
+			     <security:password-encoder ref="passwordEncoder"/>			
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+
+
+    <!-- common beans and filters -->
+   
+   	<bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+   
+   	<bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.access.vote.RoleVoter"/>
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+				<bean class="org.springframework.security.web.access.expression.WebExpressionVoter"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter" />
+
+	<security:filter-security-metadata-source use-expressions="true" id="commonInterceptUrlDefinition">
+	    
+	    
+		<security:intercept-url pattern="/admin/*"    access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" />
+		<security:intercept-url pattern="/seller/*"   access="hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_MANAGER')" />
+		<security:intercept-url pattern="/*/customer/*" access="hasRole('ROLE_CUSTOMER')" />
+		<security:intercept-url pattern="/customer/j_spring_security_logout"    access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMER','ROLE_SELLER','ROLE_ADMIN','ROLE_MANAGER')" />
+		<security:intercept-url pattern="/customer/j_spring_security_check"    access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMER','ROLE_SELLER','ROLE_ADMIN','ROLE_MANAGER')" />
+	   <security:intercept-url pattern="/customer/customer-process"    access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMER','ROLE_SELLER','ROLE_ADMIN','ROLE_MANAGER')" />
+		
+		<security:intercept-url pattern="/*/*"    access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMER','ROLE_SELLER','ROLE_ADMIN','ROLE_MANAGER')" />
+ 
+		
+	</security:filter-security-metadata-source>
+
+	<bean id="securityContextFilter"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+		<property name="securityContextRepository" ref="securityContextRepository" />
+	</bean>
+	<bean id="securityContextRepository"
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
+
+
+
+</beans>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+       	<property name="locations">
+       		<list>
+       			<value>classpath:mail.properties</value>
+       			<value>classpath:database.properties</value>
+       		</list>
+       	</property>
+       	<property name="ignoreUnresolvablePlaceholders" value="false" />
+   	</bean>
+	
+	<import resource="classpath*:hibernate-jpa-context.xml" />
+	<import resource="classpath*:annotation-config.xml" />
+
+	<bean id="adminCustomUserService"
+		class="com.onionsquare.core.service.CustomAuthenticationService">
+		<property name="userRole" value="admin"></property>
+	</bean>
+
+	<bean id="userCustomUserService"
+		class="com.onionsquare.core.service.CustomAuthenticationService">
+		<property name="userRole" value="seller"></property>
+	</bean>
+	
+	<bean id="customerCustomUserService"
+		class="com.onionsquare.core.service.CustomAuthenticationService">
+		<property name="userRole" value="customer"></property>
+	</bean>
+
+	<!-- Message resources -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<bean id="messageSourceAccessor"
+		class="org.springframework.context.support.MessageSourceAccessor">
+		<constructor-arg ref="messageSource" />
+	</bean>
+
+	<!-- Email Sender -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+	            <prop key="mail.smtp.auth">true</prop>
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

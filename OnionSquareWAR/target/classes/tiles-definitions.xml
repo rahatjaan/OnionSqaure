@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	
+	<definition name="seller-layout" template="/jsp/layout/seller-layout.jsp">
+		<put-attribute name="header" value="/jsp/layout/seller-header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/seller-footer.jsp" />
+	</definition>
+	
+	<definition name="admin-layout" template="/jsp/layout/admin-layout.jsp">
+		<put-attribute name="header" value="/jsp/layout/admin-header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/admin-footer.jsp" />
+	</definition>
+
+   <definition name="index-layout" template="/jsp/layout/index-layout.jsp">
+		<put-attribute name="header" value="/jsp/layout/index-header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/index-footer.jsp" />
+	</definition>
+	
+	<definition name="store-layout" template="/jsp/layout/store-layout.jsp">
+		<put-attribute name="header" value="/jsp/layout/store-header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/store-footer.jsp" />
+	</definition>	
+	
+	<definition name="content-layout" template="/jsp/layout/layout.jsp">
+		<put-attribute name="header" value="/jsp/layout/index-header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/index-footer.jsp" />
+	</definition>
+
+	
+	<definition name="home" extends="index-layout">
+		<put-attribute name="body" value="/jsp/onionsquare.jsp" />
+	</definition>
+	
+
+	<definition name="admin-login" extends="index-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-login.jsp" />
+	</definition>
+	
+	<definition name="admin-home" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-home.jsp" />
+	</definition>
+	
+	<definition name="admin-editDetails" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-editDetails.jsp" />
+	</definition>
+	
+	<definition name="admin-view-inquiries" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-view-inquiries.jsp" />
+	</definition>
+	
+	
+	<definition name="admin-inquiries" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-inquiries.jsp" />
+	</definition>
+	
+    <definition name="admin-terms-of-use" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-terms-of-use.jsp" />
+	</definition>
+	
+	   <definition name="admin-privacy-policy" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-privacy-policy.jsp" />
+	</definition>
+	
+	<definition name="admin-view-stores" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-view-stores.jsp" />
+	</definition>
+	
+	<definition name="admin-view-orders" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-view-orders.jsp" />
+	</definition>
+	
+	<definition name="admin-view-orderDetail" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-view-orderDetail.jsp" />
+	</definition>
+	
+	<definition name="manager-form" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-create-manager.jsp" />
+	</definition>
+	
+	<definition name="manager-list" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-list-manager.jsp" />
+	</definition>
+	
+	<definition name="admin-manager-inquiry" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-manager-inquiry.jsp" />
+	</definition>
+	
+	<definition name="financial-stat" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-view-financialStat.jsp" />
+	</definition>
+	
+	<definition name="admin-changePassword" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-changePassword.jsp" />
+	</definition>
+	
+	<definition name="admin-inquiry-seller" extends="admin-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-inquiry-seller.jsp" />
+	</definition>
+	
+	
+	<definition name="seller-login" extends="index-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-login.jsp" />
+	</definition>
+	
+	<definition name="customer-seller-login" extends="index-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-seller-login.jsp" />
+	</definition>
+	
+	<definition name="onionsquare-description" extends="content-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-description.jsp" />
+	</definition>
+	
+	<definition name="onionsquare-work" extends="content-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-work.jsp" />
+	</definition>
+	
+	<definition name="onionsquare-terms-of-use" extends="content-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-terms-of-use.jsp" />
+	</definition>
+	
+	<definition name="onionsquare-privacy-policy" extends="content-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-privacy-policy.jsp" />
+	</definition>
+	
+	
+	<definition name="customer-onionsquare-work" extends="store-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-work.jsp" />
+	</definition>
+	
+	<definition name="customer-onionsquare-terms-of-use" extends="store-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-terms-of-use.jsp" />
+	</definition>
+	
+	<definition name="customer-onionsquare-privacy-policy" extends="store-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-privacy-policy.jsp" />
+	</definition>
+	
+	<definition name="seller-login-store" extends="store-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-login.jsp" />
+	</definition>
+	
+	<definition name="seller-form" extends="index-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-form.jsp" />
+	</definition>
+	
+	<definition name="seller-form-store" extends="store-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-form.jsp" />
+	</definition>
+	
+	<definition name="seller-home" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-home.jsp" />
+	</definition>
+	
+	<definition name="seller-inquiry-admin" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-inquiry-admin.jsp" />
+	</definition>	
+	
+	<definition name="seller-view-inquiries" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-view-inquiries.jsp" />
+	</definition>
+	
+	<definition name="seller-inquiries" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-inquiries.jsp" />
+	</definition>
+	
+	<definition name="seller-financial-stat" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-finance.jsp" />
+	</definition>
+	
+	<definition name="customer-inquiry" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-inquiry.jsp" />
+	</definition>
+	
+		<definition name="customer-view-inquiries" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-view-inquiries.jsp" />
+	</definition>
+	
+	<definition name="customer-inquiries" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-inquiries.jsp" />
+	</definition>	
+	
+	<definition name="invitation-list" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/invitation-list.jsp" />
+	</definition>
+	
+	<definition name="store-product" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-product.jsp" />
+	</definition>
+	
+	<definition name="store-product-images" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-product-images.jsp" />
+	</definition>
+	
+	<definition name="store-category" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-category.jsp" />
+	</definition>
+	
+	<definition name="store-form" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-form.jsp" />
+	</definition>
+	
+	<definition name="store-view" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-view.jsp" />
+	</definition>
+	
+	<definition name="seller-profile" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-profile.jsp" />
+	</definition>
+	
+	<definition name="seller-changePassword" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-changePassword.jsp" />
+	</definition>
+	
+	<definition name="seller-editForm" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-editForm.jsp" />
+	</definition>
+	
+	<definition name="invitation-program" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/invitation-program.jsp" />
+	</definition>
+	
+	<definition name="store-order" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-order.jsp" />
+	</definition>
+	
+	<definition name="store-orderDetail" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-orderDetail.jsp" />
+	</definition>
+	
+	<definition name="seller-network" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-network.jsp" />
+	</definition>
+	
+	<definition name="store-current-order" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/store/store-current-order.jsp" />
+	</definition>
+	
+	 <definition name="seller-terms-of-use" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-terms-of-use.jsp" />
+	</definition>
+	
+	   <definition name="seller-privacy-policy" extends="seller-layout">
+		<put-attribute name="body" value="/jsp/index/onionsquare-privacy-policy.jsp" />
+	</definition>
+	
+	<definition name="store-home" extends="store-layout">
+		<put-attribute name="body" value="/jsp/store/store-home.jsp" />
+	</definition>
+	
+	<definition name="store-inquiry" extends="store-layout">
+		<put-attribute name="body" value="/jsp/store/store-inquiry.jsp" />
+	</definition>
+	
+	
+	<definition name="store-view-product" extends="store-layout">
+		<put-attribute name="body" value="/jsp/store/store-view-product.jsp" />
+	</definition>
+	
+	<definition name="admin-inquiry" extends="index-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-inquiry-visitor.jsp" />
+	</definition>
+	
+	<definition name="seller-terms-conditions" extends="content-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-terms-conditions.jsp" />
+	</definition>
+	
+	<definition name="customer-terms-conditions" extends="content-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-terms-conditions.jsp" />
+	</definition>
+	
+	<definition name="customer-login" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-login.jsp" />
+	</definition>
+	
+	<definition name="customer-form" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-form.jsp" />
+	</definition>
+	
+	<definition name="customer-form-index" extends="index-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-form-index.jsp" />
+	</definition>
+	
+	<definition name="customer-editForm" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-form.jsp" />
+	</definition>
+	
+	<definition name="customer-home" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-home.jsp" />
+	</definition>
+	
+	<definition name="customer-changePassword" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-changePassword.jsp" />
+	</definition>
+	
+	<definition name="customer-checkout" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-checkout.jsp" />
+	</definition>
+	
+	<definition name="customer-order" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-order.jsp" />
+	</definition>
+	
+	<definition name="customer-orderDetail" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-orderDetail.jsp" />
+	</definition>
+	
+	<definition name="customer-viewcart" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-viewcart.jsp" />
+	</definition>	
+	
+	<definition name="store-seller-profile" extends="store-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-profile.jsp" />
+	</definition>
+	
+	<definition name="page-not-found" extends="index-layout">
+		<put-attribute name="body" value="/jsp/error-page.jsp" />
+	</definition>
+	<definition name="paypal" extends="index-layout">
+		<put-attribute name="body" value="/jsp/store/response.jsp" />
+	</definition>
+	
+	<!-- ankur: start -->
+	<!-- Added views for Forgot Password Features -->
+	<definition name="seller-forgot-password" extends="index-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-forgot-password.jsp" />
+	</definition>
+	<definition name="store-seller-forgot-password" extends="store-layout">
+		<put-attribute name="body" value="/jsp/seller/seller-forgot-password.jsp" />
+	</definition>
+	<definition name="customer-forgot-password" extends="store-layout">
+		<put-attribute name="body" value="/jsp/customer/customer-forgot-password.jsp" />
+	</definition>
+	<definition name="admin-forgot-password" extends="index-layout">
+		<put-attribute name="body" value="/jsp/admin/admin-forgot-password.jsp" />
+	</definition>
+	<!-- ankur: end -->
+</tiles-definitions>
